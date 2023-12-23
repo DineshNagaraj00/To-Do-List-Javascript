@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container-title">
+        <h1>To Do List</h1>
+    </div>
+    <div class="container">
+        <div class="inputcol">
+            <textarea name="text" class="textarea"></textarea>
+            <button type="button" class="buttoninput"><i class="fa-solid fa-check"></i></button>
+        </div>
+    </div>
+    <div class="todolist">
+        
+    </div>
+</body>
+</html>
+
+<script>
+   const inputtdl = document.querySelector('.textarea') // getting textarea
+const buttontdl = document.querySelector('.buttoninput')// button
+const listtdl = document.querySelector('.todolist')// css
+
+function clickButton(e) {
+    e.preventDefault()
+    addTodo()
+}
+
+// adding todoList
+function addTodo() {
+    const itemall = document.createElement('div')//Create a html element using js
+    itemall.classList.add('itemall')// CSS
+
+    const item = document.createElement('p')// creating paragraph element using js
+    item.classList.add('item')// css
+    item.innerText = inputtdl.value// paragraph value added
+    itemall.appendChild(item)// adding exesisting parent element
+
+    if (inputtdl.value === '') return// value must be filled.. otherwise it's doesn't allow..
+
+    const checkbutton = document.createElement("button")// button for checkmark
+    checkbutton.innerHTML = '<i class="fa-solid fa-check"></i>'// checkmark icon
+    checkbutton.classList.add("check-button")// css
+    itemall.appendChild(checkbutton)//adding exesisting parent element
+
+    const trashbutton = document.createElement("button")// button for trash
+    trashbutton.innerHTML = '<i class="fa-solid fa-trash"></i>'// trash icon
+    trashbutton.classList.add("trash-button")// css
+    itemall.appendChild(trashbutton)// adding exesisting parent element above
+
+    listtdl.appendChild(itemall)//adding exesisting parent element
+    inputtdl.value = ''
+}
+
+// checking and delete todoList 
+function okdel(e) {
+    const item = e.target
+
+    // check
+    if (item.classList[0] === 'check-button') {
+        const todolist = item.parentElement
+        todolist.classList.toggle('checklist') // get strickout line from css for completed task
+    }
+
+    // delete
+    if (item.classList[0] === 'trash-button') {
+        const todolist = item.parentElement
+        todolist.remove()
+    }
+}
+
+buttontdl.addEventListener('click', clickButton)
+listtdl.addEventListener('click', okdel)
+</script>
